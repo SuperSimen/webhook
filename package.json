@@ -1,0 +1,13 @@
+{
+  "name": "hasweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"compile": "cabal build && dist/build/basicwai/basicwai",
+	"demon": "nodemon --exec 'npm run compile' -e hs"
+  },
+  "author": "",
+  "license": "ISC"
+}
