@@ -3,10 +3,7 @@ import Network.Wai
 import Network.HTTP.Types
 import Network.Wai.Handler.Warp (run)
 import Control.Monad.IO.Class
-import qualified Data.ByteString.Lazy.Char8 as B
 import System.Process
-import qualified Data.Text.Lazy as T
-import Data.List
 
 app request respond = case (requestMethod request, rawPathInfo request, getIpFromFullAdress $ show $ remoteHost request) of
     ("GET", "/webhook", "127.0.0.1")    -> goGit request respond
@@ -20,7 +17,9 @@ goGit request respond = do
     spawnCommand "git -C /home/simen/src/test.no pull"
     respond $ makePage "Fine!"
 
-goAway request respond = respond $ makePage "GO AWAY!";
+goAway request respond = do 
+    putStrLn $ show $ remoteHost request
+    respond $ makePage "GO AWAY!"
 
 makePage content = responseLBS
     status200
