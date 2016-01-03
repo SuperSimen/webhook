@@ -1,20 +1,20 @@
 {-# LANGUAGE OverloadedStrings #-}
-import Network.Wai
-import Network.HTTP.Types
+import Network.Wai (requestMethod, rawPathInfo, remoteHost, responseLBS)
+import Network.HTTP.Types (status200)
 import Network.Wai.Handler.Warp (run)
-import Control.Monad.IO.Class
-import System.Process
+import System.Process (spawnCommand)
 
-app request respond = case (requestMethod request, rawPathInfo request, getIpFromFullAdress $ show $ remoteHost request) of
+app request respond = case (requestMethod request, rawPathInfo request, getIpFromFullAddress $ show $ remoteHost request) of
     ("GET", "/webhook", "127.0.0.1")    -> goGit request respond
     _                                    -> goAway request respond
 
-getIpFromFullAdress (':':xs) = []
-getIpFromFullAdress (x:xs) = x : getIpFromFullAdress xs
+getIpFromFullAddress (':':xs) = []
+getIpFromFullAddress (x:xs) = x : getIpFromFullAddress xs
 
 goGit request respond = do
-    putStrLn $ show $ remoteHost request
-    spawnCommand "git -C /home/simen/src/test.no pull"
+    putStrLn $ getIpFromFullAddress $ show $ remoteHost request
+    --spawnCommand "git -C /home/simen/src/test.no pull"
+    spawnCommand "echo HOWDY"
     respond $ makePage "Fine!"
 
 goAway request respond = do 
@@ -29,5 +29,4 @@ makePage content = responseLBS
 
 main :: IO ()
 main = do
-    putStrLn $ "http://localhost:8080/"
-    run 8080 app
+    run 56308 app

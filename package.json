@@ -4,9 +4,12 @@
   "description": "",
   "main": "",
   "scripts": {
-	"compile": "cabal build && dist/build/webhook/webhook",
-	"start": "nodemon --exec 'npm run compile' -e hs"
+    "compile": "cabal build && dist/build/webhook/webhook",
+    "start": "nodemon --exec 'npm run compile' -e hs"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
 }
