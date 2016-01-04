@@ -14,7 +14,7 @@ getIpFromFullAddress (x:xs) = x : getIpFromFullAddress xs
 goGit request respond = do
     putStrLn $ getIpFromFullAddress $ show $ remoteHost request
     --spawnCommand "git -C /home/simen/src/test.no pull"
-    spawnCommand "echo HOWDY"
+    spawnCommand "./runMe.sh"
     respond $ makePage "Fine!"
 
 goAway request respond = do 
@@ -29,4 +29,5 @@ makePage content = responseLBS
 
 main :: IO ()
 main = do
+    putStrLn "Running server on 56308"
     run 56308 app
